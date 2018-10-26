@@ -107,7 +107,7 @@ def calculateMetrics(calls):
         calculateMetricsByFilter(calls, lambda call: call["analysis"]["conversationTopic_delivery"])
 
     satisfactionCallCount, satisfactionCallLength = \
-        calculateMetricsByFilter(calls, lambda call: call["analysis"]["satisfied"] != "unsatisfied")
+        calculateMetricsByFilter(calls, lambda call: call["analysis"]["satisfaction"] != "unsatisfied")
     kindCallCount, kindCallLength = \
         calculateMetricsByFilter(calls, lambda call: call["analysis"]["kindness"] != "unkind")
 
