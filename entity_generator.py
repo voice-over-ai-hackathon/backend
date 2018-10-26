@@ -235,13 +235,13 @@ def generateCall():
     callTopic = random.choice([1, 2, 3])
     callAnalysis = {
       "gender": random.choice(["male", "female"]),
-      "emotion": random.choice(["calm", "happy", "sad", "angry", "fearful", "neutral"]),
+      "emotion": random.choice(["calm", "happy", "sad", "angry", "fearful", "neutral", "neutral", "neutral"]),
       "conversationTopic_informationQuery": callTopic == 1,
       "conversationTopic_pickupCollection": callTopic == 2,
       "conversationTopic_delivery": callTopic == 3,
-      "type": random.choice(["business", "private"]),
+      "type": random.choice(["business", "private", "private", "private","private"]),
       "satisfaction": random.choice(["satisfied", "unsatisfied", "neutral"]),
-      "kindness": random.choice(["kind", "unkind", "neutral"]),
+      "kindness": random.choice(["kind", "unkind", "neutral", "neutral", "neutral"]),
     }
     callProfile = generateCallProfile(callAnalysis)
 
