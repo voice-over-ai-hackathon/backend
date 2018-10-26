@@ -1,11 +1,12 @@
 # System modules
 import logging
-from datetime import datetime
+import datetime
 
 # 3rd party modules
 from flask import make_response, abort
 
-from entity_generator import generateCompany
+from entity_generator import generateCompany, generateCallProfile, generateCallFrame
+
 
 def without_keys(d, keys):
      return {x: d[x] for x in d if x not in keys}
@@ -15,37 +16,46 @@ def get_timestamp():
 
 # Data to serve with our API
 COMPANY = generateCompany()
-companyToReturn = without_keys(COMPANY, "employees")
-employeesToReturn = [ without_keys(employee, "calls") for employee in COMPANY["employees"] ]
+companyToReturn = without_keys(COMPANY, ["employees", "calls"])
+employeesToReturn = [ without_keys(employee, ["calls"]) for employee in COMPANY["employees"] ]
 
+# _callFrameProfile = generateCallProfile()
+# def analyzeCallFrame():
+#     return generateCallFrame(
+#         _callFrameProfile
+#     )
 def analyzeCallFrame():
     return None
 
 def findEmployee(employeeId):
     try:
-        employee = employeesToReturn[int(employeeId)]
+        employee = employeesToReturn[int(employeeId) - 1]
         return employee
     except Exception:
         logging.exception("Error getting employee")
         return None
 
-def findCall(employeeId, callId):
+def findCall(callId):
     try:
-        employee = COMPANY["employees"][int(employeeId)]
-    except Exception:
-        logging.exception("Error getting employee")
-        employee = None
-
-    try:
-        call = employee["calls"][int(callId)]
+        call = COMPANY["calls"][int(callId) - 1]
         return call
     except Exception:
         logging.exception("Error getting call")
         return None
 
 
-def getCall(employeeId, callId):
-    call = findCall(employeeId, callId)
+def ping():
+
+    return {
+        'result': 'ping',
+        'datetime': datetime.datetime.utcnow()
+    }
+
+def getCalls():
+    return COMPANY['calls']
+
+def getCall(callId):
+    call = findCall(callId)
 
     if not call:
         return abort(
@@ -55,6 +65,9 @@ def getCall(employeeId, callId):
 
     return call
 
+
+def getEmployees():
+    return employeesToReturn
 
 def getEmployee(employeeId):
     employee = findEmployee(employeeId)

@@ -12,6 +12,26 @@ basePath: /api
 
 paths:
 
+  /ping:
+    get:
+      operationId: api.ping
+      summary: Gets a ping response.
+      description: |
+        Gets a ping response. The response is a JSON object that contains the server time.
+      # no security required here
+      security: []
+      responses:
+        '200':
+          description: Ping reponse.
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+              datetime:
+                type: string
+                format: date-time
+
   /analyzeCallFrame:
     get:
       operationId: api.analyzeCallFrame
@@ -21,14 +41,24 @@ paths:
           schema:
             $ref: '#/definitions/CallFrame'
 
-  /employees/{employeeId}/calls/{callId}:
+  /calls:
+    get:
+      operationId: api.getCalls
+      responses:
+        '200':
+          description: Calls array.
+          schema:
+            type: array
+            readOnly: true
+            minItems: 0
+            maxItems: 1000
+            items:
+              $ref: '#/definitions/Call'
+
+  /calls/{callId}:
     get:
       operationId: api.getCall
       parameters:
-        - name: employeeId
-          in: path
-          type: string
-          required: True
         - name: callId
           in: path
           type: string
@@ -38,6 +68,21 @@ paths:
           description: Call object.
           schema:
             $ref: '#/definitions/Call'
+
+  /employees:
+    get:
+      operationId: api.getEmployees
+      responses:
+        '200':
+          description: Employees array.
+          schema:
+            type: array
+            readOnly: true
+            minItems: 0
+            maxItems: 1000
+            items:
+              $ref: '#/definitions/Employee'
+
 
   /employees/{employeeId}:
     get:
@@ -161,6 +206,50 @@ definitions:
           - unkind
           - neutral
 
+  CallMetrics:
+    type: object
+
+  CallAnalysis:
+    type: object
+    properties:
+      gender:
+        type: string
+        enum:
+          - male
+          - female
+      emotion:
+        type: string
+        enum:
+          - calm
+          - happy
+          - sad
+          - angry
+          - fearful
+          - neutral
+      conversationTopic_informationQuery:
+        type: boolean
+      conversationTopic_pickupCollection:
+        type: boolean
+      conversationTopic_delivery:
+        type: boolean
+      type:
+        type: string
+        enum:
+          - business
+          - private
+      satisfaction:
+        type: string
+        enum:
+          - satisfied
+          - unsatisfied
+          - neutral
+      kindness:
+        type: string
+        enum:
+          - kind
+          - unkind
+          - neutral
+
   Call:
     type: object
     properties:
@@ -177,6 +266,8 @@ definitions:
         maxItems: 10000
         items:
           $ref: '#/definitions/CallFrame'
+      analysis:
+        $ref: '#/definitions/CallAnalysis'
       statistics:
         $ref: '#/definitions/Statistics'
 
@@ -192,6 +283,8 @@ definitions:
           type: string
       name:
         type: string
+      picture:
+        type: string
       lengthAverage:
         type: integer
         minimum: 0
@@ -201,6 +294,20 @@ definitions:
   Company:
     type: object
     properties:
+      topFiveEmployeeIds:
+        type: array
+        readOnly: true
+        minItems: 0
+        maxItems: 5
+        items:
+          type: string
+      bottomFiveEmployeeIds:
+        type: array
+        readOnly: true
+        minItems: 0
+        maxItems: 5
+        items:
+          type: string
       employeeIds:
         type: array
         readOnly: true
