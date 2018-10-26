@@ -129,7 +129,7 @@ def calculateMetrics(calls):
         },
     }
 
-def generateCallFrame(callFrameProfile):
+def generateCallFrame(callProfile):
     # {
     #     "genderProfile": random.choice(
     #         ["male", "female"],
@@ -146,14 +146,14 @@ def generateCallFrame(callFrameProfile):
     # }
 
     return {
-      "gender": random.choice(callFrameProfile['genderProfile']),
-      "emotion": random.choice(callFrameProfile['emotionProfile']),
-      "conversationTopic_informationQuery": callFrameProfile['conversationTopic_informationQuery'] if random.choice([True, False, False]) else False,
-      "conversationTopic_pickupCollection": callFrameProfile['conversationTopic_pickupCollection'] if random.choice([True, False, False]) else False,
-      "conversationTopic_delivery": callFrameProfile['conversationTopic_delivery'] if random.choice([True, False, False]) else False,
-      "type": callFrameProfile['typeProfile'] if random.choice([True, False, False]) else "none",
-      "satisfaction": random.choice(callFrameProfile['satisfactionProfile']),
-      "kindness": random.choice(callFrameProfile['kindnessProfile']),
+      "gender": random.choice(callProfile['genderProfile']),
+      "emotion": random.choice(callProfile['emotionProfile']),
+      "conversationTopic_informationQuery": callProfile['conversationTopic_informationQuery'] if random.choice([True, False, False]) else False,
+      "conversationTopic_pickupCollection": callProfile['conversationTopic_pickupCollection'] if random.choice([True, False, False]) else False,
+      "conversationTopic_delivery": callProfile['conversationTopic_delivery'] if random.choice([True, False, False]) else False,
+      "type": callProfile['typeProfile'] if random.choice([True, False, False]) else "none",
+      "satisfaction": random.choice(callProfile['satisfactionProfile']),
+      "kindness": random.choice(callProfile['kindnessProfile']),
     }
 
 def generateCallProfile(callAnalysis):
@@ -222,12 +222,13 @@ def generateCallProfile(callAnalysis):
 def generateCall():
 
     callLength = random.randint(60, 600)
+    callTopic = random.choice([1, 2, 3])
     callAnalysis = {
       "gender": random.choice(["male", "female"]),
       "emotion": random.choice(["calm", "happy", "sad", "angry", "fearful", "neutral"]),
-      "conversationTopic_informationQuery": random.choice([True, False]),
-      "conversationTopic_pickupCollection": random.choice([True, False]),
-      "conversationTopic_delivery": random.choice([True, False]),
+      "conversationTopic_informationQuery": callTopic == 1,
+      "conversationTopic_pickupCollection": callTopic == 2,
+      "conversationTopic_delivery": callTopic == 3,
       "type": random.choice(["business", "private"]),
       "satisfaction": random.choice(["satisfied", "unsatisfied", "neutral"]),
       "kindness": random.choice(["kind", "unkind", "neutral"]),
@@ -264,7 +265,7 @@ def generateEmployee():
         "id": generateEmployeeId(),
         "callIds": [ call['id'] for call in calls ],
         "calls": calls,
-        "name": names.get_full_name(),
+        "name": uifaces.randomManName() if isMale else uifaces.randomWomanName(),
         "picture": pic,
         "lengthAverage": lengthAverage,
         "metrics": calculateMetrics(calls),
