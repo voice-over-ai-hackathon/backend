@@ -265,6 +265,7 @@ def generateEmployee():
         "id": generateEmployeeId(),
         "callIds": [ call['id'] for call in calls ],
         "calls": calls,
+        "gender": "male" if isMale else "female",
         "name": uifaces.randomManName() if isMale else uifaces.randomWomanName(),
         "picture": pic,
         "lengthAverage": lengthAverage,

@@ -2567,6 +2567,7 @@ menFirstName = [
 ]
 
 womenFirstName = [
+    "שונטל",
     "דנה",
     "גלית",
     "אוריאן",
