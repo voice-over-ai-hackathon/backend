@@ -2637,6 +2637,7 @@ lastNames = [
     "יעקב",
 ]
 
+
 def randomManName():
     firstName = random.choice(menFirstName)
     lastName = random.choice(lastNames)
@@ -2649,3 +2650,22 @@ def randomWomanName():
     lastName = random.choice(lastNames)
 
     return "%s %s" % (firstName, lastName)
+
+
+conceptToEmojiImage = {
+    "calm": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/calm.png",
+    "happy": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/happy.png",
+    "sad": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/sad.png",
+    "angry": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/angry.png",
+    "fearful": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/fearful.png",
+    "neutral": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/neutral.png",
+    "informationQuery": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/getting_information2.png",
+    "pickupCollection": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/collecting.png",
+    "delivery": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/delivery.png",
+    "business": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/business2.png",
+    "private": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/private.png",
+    "satisfied": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/satisfied.png",
+    "unsatisfied": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/unsatisfied.png",
+    "kind": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/courteous_agent.png",
+    "unkind": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/uncourteous_agent.png",
+}
