@@ -95,6 +95,7 @@ def calculateMetricsByFilter(calls, filterFunc):
     return float(totalCount), float(totalLength)
 
 def calculateMetrics(calls):
+
     allCallCount, allCallLength = calculateMetricsByFilter(calls, lambda call: True)
     businessCallCount, businessCallLength = calculateMetricsByFilter(calls, lambda call: call["analysis"]["type"] == "business")
     privateCallCount, privateCallLength = calculateMetricsByFilter(calls, lambda call: call["analysis"]["type"] == "private")
@@ -105,9 +106,14 @@ def calculateMetrics(calls):
     deliveryCallCount, deliveryCallLength = \
         calculateMetricsByFilter(calls, lambda call: call["analysis"]["conversationTopic_delivery"])
 
+    satisfactionCallCount, satisfactionCallLength = \
+        calculateMetricsByFilter(calls, lambda call: call["analysis"]["satisfied"] != "unsatisfied")
+    kindCallCount, kindCallLength = \
+        calculateMetricsByFilter(calls, lambda call: call["analysis"]["kindness"] != "unkind")
+
     goodCalls = sum(1 if call["analysis"]["emotion"] in ("neutral", "happy", "calm") else 0 for call in calls)
     badCalls = sum(1 if call["analysis"]["emotion"] in ("angry", "sad", "fearful") else 0 for call in calls)
-    score = goodCalls - badCalls
+    score = float(goodCalls) / (float(badCalls) + float(goodCalls))
 
     return {
         "score": score,
@@ -118,6 +124,8 @@ def calculateMetrics(calls):
             "conversationTopic_informationQuery": int(informationQueryCallCount / allCallCount * 100.0),
             "conversationTopic_pickupCollection": int(pickupCollectionCallCount / allCallCount * 100.0),
             "conversationTopic_delivery": int(deliveryCallCount / allCallCount * 100.0),
+            "kind": int(kindCallCount / allCallCount * 100.0),
+            "satisfied": int(satisfactionCallCount / allCallCount * 100.0),
         },
         "callAverageLength": {
             "all": int(allCallLength / allCallCount),
@@ -126,6 +134,8 @@ def calculateMetrics(calls):
             "conversationTopic_informationQuery": int(informationQueryCallLength / informationQueryCallCount),
             "conversationTopic_pickupCollection": int(pickupCollectionCallLength / pickupCollectionCallCount),
             "conversationTopic_delivery": int(deliveryCallLength / deliveryCallCount),
+            "kind": int(kindCallLength / kindCallCount* 100.0),
+            "satisfied": int(satisfactionCallLength / satisfactionCallCount * 100.0),
         },
     }
 

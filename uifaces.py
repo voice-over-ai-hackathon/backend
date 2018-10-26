@@ -2669,3 +2669,7 @@ conceptToEmojiImage = {
     "kind": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/courteous_agent.png",
     "unkind": "http://ibd-backend.datah-route-b0wnj1b639re-1206570512.eu-west-1.convox.site/static/emoji/uncourteous_agent.png",
 }
+
+
+
+
